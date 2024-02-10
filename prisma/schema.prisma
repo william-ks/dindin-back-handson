@@ -6,3 +6,33 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       String @id @default(cuid()) @map("_id")
+  name     String
+  email    String
+  password String
+
+  @@map("users")
+}
+
+model Category {
+  id      String @id @default(cuid()) @map("_id")
+  name    String
+  user_id String @map("user_id")
+
+  @@map("categories")
+}
+
+model Transaction {
+  id          String   @id @default(cuid()) @map("_id")
+  type        String
+  title       String
+  value       Int
+  date        DateTime @default(now())
+  description String
+  user_id     String   @map("user_id")
+  category_id String   @map("category_id")
+
+  @@map("transactions")
+}
